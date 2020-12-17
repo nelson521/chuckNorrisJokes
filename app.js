@@ -11,6 +11,18 @@ function getJoke(e) {
   xhr.onload = function () {
     if (this.status === 200) {
       const result = JSON.parse(this.responseText);
+
+      let output = '';
+
+      if (result.type === 'success') {
+        result.value.forEach(function (joke) {
+          output += `<li>${joke.joke}</li>`;
+        });
+      } else {
+        output += `<li>Error!!</li>`;
+      }
+      document.querySelector('#jokesLocation').innerHTML = output;
+
       console.log(result);
       console.log(number);
     }
