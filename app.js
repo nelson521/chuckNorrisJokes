@@ -1,20 +1,9 @@
-const inputNum = document.querySelector('#number').value;
-const button = document.querySelector('#button');
-const joke = document.querySelector('#joke');
+const number = document.querySelector('#number');
+const button = document
+  .querySelector('#button')
+  .addEventListener('click', getJoke);
 
-button.addEventListener('click', getJoke);
 function getJoke(e) {
-  const xml = new XMLHttpRequest();
-  xml.open('GET', `http://api.icndb.com/jokes/random`, true);
-  xml.onload = function () {
-    if (this.status === 200) {
-      const value = JSON.parse(this.responseText);
-      console.log(value.value.joke);
-      // value.value
-    }
-  };
-  xml.send();
+  console.log(number.value);
   e.preventDefault();
 }
-
-// ${inputNum.value}
