@@ -1,32 +1,34 @@
-const button = document
-  .querySelector('#button')
-  .addEventListener('click', getJoke);
+const btn = document.querySelector('#button');
+const joke = document.querySelector('#jokesLocation');
 
-function getJoke(e) {
-  const xhr = new XMLHttpRequest();
-  const number = document.querySelector('#number').value;
+btn.addEventListener('click', getData);
 
-  xhr.open('GET', `http://api.icndb.com/jokes/random/${number}`, true);
+function getData(e) {
+  let xhr = new XMLHttpRequest();
+  let number = document.getElementById('number').value;
 
   xhr.onload = function () {
     if (this.status === 200) {
-      const result = JSON.parse(this.responseText);
-
-      let output = '';
+      let result = JSON.parse(xhr.responseText);
+      let output = ``;
 
       if (result.type === 'success') {
         result.value.forEach(function (joke) {
-          output += `<li>${joke.joke}</li>`;
+          output += `
+            <li>${joke.joke}</li>
+          `;
+          console.log(joke.joke);
         });
       } else {
-        output += `<li>Error!!</li>`;
+        console.log('Error');
       }
-      document.querySelector('#jokesLocation').innerHTML = output;
 
-      console.log(result);
-      console.log(number);
+      joke.innerHTML = output;
     }
   };
+
+  xhr.open('GET', `http://api.icndb.com/jokes/random/${number}`, true);
+
   xhr.send();
   e.preventDefault();
 }
